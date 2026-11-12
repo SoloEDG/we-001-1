@@ -49,6 +49,30 @@ export interface Session {
   live: Battle;
   events: BattleEvent[];
 }
+/**
+ * 一条推演分支的元数据。
+ * - root 分支保存完整事件链；其余分支只保存从分叉点之后的自有事件，
+ *   前缀通过 parentId / point 共享父分支的不可变历史。
+ * - point: 分叉时在父分支时间线上的全局步数（事件条数）。
+ */
+export interface BranchMeta {
+  id: string;
+  name: string;
+  parentId: string | null;
+  point: number;
+  createdAt: number;
+}
+/**
+ * 分支存档：会话数据与元数据分离。
+ * meta 顺序保持为插入顺序，root 始终是第一项。
+ */
+export interface BranchStore {
+  version: 1;
+  currentId: string;
+  meta: Record<string, BranchMeta>;
+  order: string[];
+  sessions: Record<string, Session>;
+}
 export interface Skill {
   id: string;
   name: string;

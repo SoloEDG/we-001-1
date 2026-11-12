@@ -17,10 +17,3 @@ export function record(
     after: clone(s.live),
   });
 }
-export function frame(s: Session, cursor: number) {
-  return cursor < 0
-    ? s.live
-    : cursor === 0
-      ? s.initial
-      : s.events[Math.min(cursor, s.events.length) - 1].after;
-}

@@ -128,6 +128,9 @@ p {
   border-radius: 50%;
   margin-right: 9px;
 }
+.live-badge i.paused {
+  background: #d5ac73;
+}
 .live-badge small {
   display: block;
   color: #80958a;
@@ -511,6 +514,91 @@ input[type="range"] {
 .event-list span {
   margin-left: auto;
   color: #bcab72;
+}
+.store-error {
+  background: #4a2f26;
+  border: 1px solid #b97c61;
+  color: #f0c4a8;
+  padding: 12px 18px;
+  margin-bottom: 18px;
+  font-size: 12px;
+}
+.fork-inline {
+  width: 100%;
+  font-size: 11px;
+  padding: 10px;
+}
+.branch-panel .fork-btn {
+  width: 100%;
+  font-size: 11px;
+  padding: 10px;
+}
+.branch-hint,
+.branch-footnote {
+  font-size: 10px;
+  color: #7f9384;
+  margin: 10px 0 0;
+  line-height: 1.6;
+}
+.branch-footnote {
+  margin-top: 12px;
+  border-top: 1px solid #2e3d33;
+  padding-top: 10px;
+}
+.branch-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 12px;
+  max-height: 220px;
+  overflow: auto;
+}
+.branch-row {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border-color: transparent;
+  border-left: 2px solid #3a514a;
+  padding: 9px 10px;
+  font-size: 11px;
+}
+.branch-row.chosen {
+  border-left-color: #c7b679;
+  background: #2c3b2f;
+}
+.branch-name {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.branch-twig {
+  color: #7d9a86;
+  font-style: normal;
+  margin-right: 4px;
+}
+.branch-meta {
+  color: #789381;
+  font-size: 9px;
+  white-space: nowrap;
+}
+.branch-live {
+  color: #b4d2a3;
+  font-size: 9px;
+  font-style: normal;
+}
+.branch-del {
+  color: #b97c61;
+  padding: 0 4px;
+  font-size: 14px;
+  line-height: 1;
+}
+.branch-del:hover {
+  color: #e5ba8b;
 }
 footer {
   display: flex;

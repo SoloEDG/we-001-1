@@ -3,16 +3,19 @@ import { BattleMap, TerrainPanel } from "../features/terrain";
 import { RosterPanel } from "../features/roster";
 import { ActionPanel } from "../features/tactics";
 import { TurnOrder } from "../features/initiative";
-import { ReplayPanel, downloadArchive } from "../features/replay";
+import { ReplayPanel } from "../features/replay";
 import { key } from "../shared/document";
 import { useWorkspace } from "./workspace";
 const {
-  session,
+  store,
+  timeline,
+  branchRows,
   cursor,
   selected,
   skill,
   brush,
   notice,
+  storeError,
   battle,
   actor,
   locked,
@@ -20,10 +23,15 @@ const {
   targets,
   path,
   playback,
+  BranchPanel,
   cell,
   wait,
   seek,
+  switchBranch,
+  createBranch,
+  deleteBranch,
   reset,
+  download,
 } = useWorkspace();
 </script>
 <template>
@@ -42,14 +50,18 @@ const {
       <div>
         <div class="eyebrow">OPERATION 001 / 北境战役</div>
         <h1>在河岸，决定下一步。</h1>
-        <p>利用地形，掌握先机。每一次行动，都有迹可循。</p>
+        <p>利用地形，掌握先机。每一次行动，都有迹可循；每一条岔路，都能独立推演。</p>
       </div>
       <div class="live-badge">
-        <i />{{ cursor < 0 ? "实战指挥" : "历史回放 · 只读"
-        }}<small>消灭敌方所有角色获胜</small>
+        <i :class="{ paused: cursor >= 0 }" />{{
+          cursor < 0 ? "实战指挥 · " + store.meta[store.currentId].name : "历史回放 · 只读"
+        }}<small>消灭敌方所有角色获胜 · 分支间共享不可变前缀</small>
       </div>
     </div>
     <TurnOrder :battle="battle" />
+    <div v-if="storeError" class="store-error" role="alert">
+      ⚠ {{ storeError }}
+    </div>
     <div class="workspace">
       <aside>
         <RosterPanel
@@ -95,13 +107,24 @@ const {
           "
           @wait="wait"
         /><ReplayPanel
-          :events="session.events"
+          :events="timeline"
           :cursor="cursor"
           :playing="playback.playing.value"
+          :can-fork="cursor >= 0"
+          :branch-name="store.meta[store.currentId].name"
           @seek="seek"
           @play="playback.play(cursor)"
           @stop="playback.stop"
-          @download="downloadArchive(session)"
+          @download="download"
+          @fork="createBranch"
+        /><BranchPanel
+          :rows="branchRows"
+          :current-id="store.currentId"
+          :cursor="cursor"
+          :can-fork="cursor >= 0"
+          @switch="switchBranch"
+          @fork="createBranch"
+          @remove="deleteBranch"
         />
       </aside>
     </div>

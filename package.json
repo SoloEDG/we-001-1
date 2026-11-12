@@ -6,7 +6,10 @@
   "scripts": {
     "dev": "vite --host 0.0.0.0",
     "build": "vite build",
-    "typecheck": "vue-tsc --noEmit"
+    "typecheck": "vue-tsc --noEmit",
+    "test:branch": "node scripts/branch-logic-test.mjs",
+    "test:archive": "node scripts/archive-test.mjs",
+    "test": "npm run test:branch && npm run test:archive"
   },
   "dependencies": {
     "vue": "^3.5.0"
